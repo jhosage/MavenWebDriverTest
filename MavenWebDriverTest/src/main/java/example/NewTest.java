@@ -7,10 +7,14 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;		
+
+import org.testng.annotations.Optional;	
 import org.testng.annotations.Test;	
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.AfterTest;		
+
+
 public class NewTest {		
 	    private WebDriver driver;		
 		@Test				
@@ -22,7 +26,7 @@ public class NewTest {
 
 	    @BeforeTest 
 	    @Parameters("browser")
-	    public void launchBrowser(String browser) {
+	    public void launchBrowser(@Optional("Firefox") String browser) {
 	    	switch (browser) {
 	    	case "Chrome":
 	    	    System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
