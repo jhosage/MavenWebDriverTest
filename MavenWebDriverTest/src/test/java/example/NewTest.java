@@ -41,7 +41,7 @@ public class NewTest {
 	    		if (windows) {
 	    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
 	    		} else {
-	    			System.setProperty("webdriver.chrome.driver", "/home/jhosage/chromedriver");
+	    			System.setProperty("webdriver.chrome.driver", "/home/jhosage/selenium-grid/chromedriver");
 	    		}
 	    		driver = new ChromeDriver();
 	        	break;
@@ -49,7 +49,7 @@ public class NewTest {
 	    		if (windows) {
 	    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
 	    		} else {
-	    			System.setProperty("webdriver.gecko.driver","/home/jhosage/geckodriver");
+	    			System.setProperty("webdriver.gecko.driver","/home/jhosage/selenium-grid/geckodriver");
 	    		}
 	      	    driver = new FirefoxDriver();
 	        	break;
