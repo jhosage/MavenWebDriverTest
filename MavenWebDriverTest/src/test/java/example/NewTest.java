@@ -1,18 +1,22 @@
 package example;		
 
+import java.util.Properties;
+
 import org.openqa.selenium.By;		
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.testng.Assert;		
-
+		
 import org.testng.annotations.Optional;	
 import org.testng.annotations.Test;	
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
-import org.testng.annotations.AfterTest;		
+import org.testng.annotations.AfterTest;
+
+import org.testng.Assert;
+import org.testng.SkipException;	
 
 
 public class NewTest {		
@@ -27,26 +31,46 @@ public class NewTest {
 	    @BeforeTest 
 	    @Parameters("browser")
 	    public void launchBrowser(@Optional("Firefox") String browser) {
+	    	Properties props = System.getProperties();
+	    	String os = props.getProperty("os.name");
+	    	boolean windows = os.startsWith("Windows");
+	    	System.out.println("Running " + browser + " on operating system: " + os);
+	    	
 	    	switch (browser) {
 	    	case "Chrome":
-	    	    System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
+	    		if (windows) {
+	    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
+	    		} else {
+	    			System.setProperty("webdriver.chrome.driver", "/home/jhosage/chromedriver");
+	    		}
 	    		driver = new ChromeDriver();
 	        	break;
 	    	case "Firefox":
-	        	System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
+	    		if (windows) {
+	    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
+	    		} else {
+	    			System.setProperty("webdriver.gecko.driver","/home/jhosage/geckodriver");
+	    		}
 	      	    driver = new FirefoxDriver();
 	        	break;
 	    	case "Edge":
-	    	    System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver.exe");
+	    		if (windows) {
+	    			System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver.exe");
+	    		} else {
+	    			throw new SkipException("Browser " + browser + " not valid on " + os);
+	    		}
 	    		driver = new EdgeDriver();
 	    	    break;
 	    	case "IE":
-	        	System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer.exe");
+	    		if (windows) {
+	    			System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer.exe");
+	    		} else {
+	    			throw new SkipException("Browser " + browser + " not valid on " + os);
+	    		}
 	        	driver = new InternetExplorerDriver();
 	        	break;
 	        default:
-	        	System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
-	      	    driver = new FirefoxDriver();
+	        	System.err.println("Invalid browser selected: " + browser);
 	        	break;
 	    	}
 	    } 
