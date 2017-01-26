@@ -25,17 +25,21 @@ import org.testng.annotations.AfterTest;
 import org.testng.Assert;
 import org.testng.TestException;
 
-public class NewTest {		
+public abstract class NewTest {		
 
-		private WebDriver driver;	
+		protected WebDriver driver;	
 	    private DesiredCapabilities capability;
-	    
+
+	    /* Structured this class to be extended with the test added
+	     * to a separate class.
+	     * 
 		@Test				
 		public void testEasy() {	
 			driver.get("http://www.guru99.com/selenium-tutorial.html");  
 			String title = driver.getTitle();				 
 			Assert.assertTrue(title.contains("Free Selenium Tutorials")); 		
 		}	
+		*/
 
 	    @BeforeTest 
 	    @Parameters({"browser", "platform", "version", "gridhub"})
