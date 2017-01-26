@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="2" parallel="tests">
+  	  <test name="TestGridLocalChrome">
+	    <parameter name="browser" value="Chrome" />
+	    <classes>
+	      <class name="example.NewTest"/>
+	    </classes>
+	  </test> <!-- Test -->
+  	  <test name="TestGridLocalFirefox">
+	    <parameter name="browser" value="Firefox" />
+	    <classes>
+	      <class name="example.NewTest"/>
+	    </classes>
+	  </test> <!-- Test -->
+  	  <test name="TestGridLocalEdge">
+	    <parameter name="browser" value="Edge" />
+	    <classes>
+	      <class name="example.NewTest"/>
+	    </classes>
+	  </test> <!-- Test -->
+  	  <test name="TestGridLocalIE">
+	    <parameter name="browser" value="IE" />
+	    <classes>
+	      <class name="example.NewTest"/>
+	    </classes>
+	  </test> <!-- Test -->
   	  <test name="TestGridRemoteChrome">
 	    <parameter name="browser" value="RemoteChrome" />
 	    <parameter name="platform" value="Windows" />
