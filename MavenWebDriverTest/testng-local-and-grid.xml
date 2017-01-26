@@ -4,25 +4,25 @@
   	  <test name="TestGridLocalChrome">
 	    <parameter name="browser" value="Chrome" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridLocalFirefox">
 	    <parameter name="browser" value="Firefox" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridLocalEdge">
 	    <parameter name="browser" value="Edge" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridLocalIE">
 	    <parameter name="browser" value="IE" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteChrome">
@@ -30,7 +30,7 @@
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteFirefox">
@@ -38,7 +38,7 @@
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteEdge">
@@ -46,7 +46,7 @@
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteIE">
@@ -54,7 +54,7 @@
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteChromeLinux">
@@ -62,7 +62,7 @@
 	    <parameter name="platform" value="Linux" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
   	  <test name="TestGridRemoteFirefoxLinux">
@@ -70,7 +70,7 @@
 	    <parameter name="platform" value="Linux" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.NewTest"/>
+	      <class name="example.TestCase_1"/>
 	    </classes>
 	  </test> <!-- Test -->
 </suite> <!-- Suite -->
