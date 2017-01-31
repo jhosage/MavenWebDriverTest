@@ -10,7 +10,7 @@ import pages.GoogleSearchResultsPage;
 import pages.YahooSearchPage;
 import pages.YahooSearchResultsPage;
 
-public class TestCaseSearches extends NewTest {
+public class TestCase_SearchesListDataProvider extends NewTest {
 
 	//@Test (enabled=false) 
 	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataProviders.ListDataProvider.class)

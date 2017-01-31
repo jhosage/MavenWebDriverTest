@@ -32,7 +32,7 @@ public class YahooSearchResultsPage {
 		
 		WebDriverWait wait = new WebDriverWait(driver, 5);
 		//wait.until(ExpectedConditions.presenceOfElementLocated(xgamesLinkText));
-		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(searchResult, 10));
+		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(searchResult, 5));
 		return this;
 	}
 	
