@@ -1,0 +1,51 @@
+package pages;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class DuckDuckGoSearchResultsPage {
+
+	WebDriver driver;
+
+	//By searchResult = By.className("result__a");
+	By searchResult = By.cssSelector("a[class=\"result__url\"");
+
+	public DuckDuckGoSearchResultsPage (WebDriver driver) {
+		this.driver = driver;
+	}
+
+	public DuckDuckGoSearchResultsPage waitForPageLoad() {
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		wait.until(ExpectedConditions.presenceOfElementLocated(searchResult) );
+		return this;
+	}
+	
+	public ArrayList<String> getSearchResultsLinks () {
+		
+		List<WebElement> resultList = driver.findElements(searchResult);
+		ArrayList<String> results = new ArrayList<String>(resultList.size());
+
+		int i = 0;
+		for (WebElement w : resultList) {
+			//results.add(w.getText());
+			results.add(w.getAttribute("href"));
+			System.out.println("result[" +i+ "] is " + results.get(i++));
+		}
+
+		return results;
+	}
+
+	public boolean searchResultsContains(String result) {
+		return getSearchResultsLinks().contains(result);
+	}
+
+}
+
+

@@ -1,52 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="2" parallel="tests">
-  	  <test name="TestGridRemoteChrome">
-	    <parameter name="browser" value="RemoteChrome" />
+   	  <test name="TestGridRemoteFirefoxLinux">
+	    <parameter name="browser" value="Firefox" />
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.TestCase_1"/>
-	    </classes>
-	  </test> <!-- Test -->
-  	  <test name="TestGridRemoteFirefox">
-	    <parameter name="browser" value="RemoteFirefox" />
-	    <parameter name="platform" value="Windows" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_1"/>
-	    </classes>
-	  </test> <!-- Test -->
-  	  <test name="TestGridRemoteEdge">
-	    <parameter name="browser" value="RemoteEdge" />
-	    <parameter name="platform" value="Windows" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_1"/>
-	    </classes>
-	  </test> <!-- Test -->
-  	  <test name="TestGridRemoteIE">
-	    <parameter name="browser" value="RemoteIE" />
-	    <parameter name="platform" value="Windows" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_1"/>
-	    </classes>
-	  </test> <!-- Test -->
-  	  <test name="TestGridRemoteChromeLinux">
-	    <parameter name="browser" value="RemoteChrome" />
-	    <parameter name="platform" value="Linux" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_1"/>
-	    </classes>
-	  </test> <!-- Test -->
-  	  <test name="TestGridRemoteFirefoxLinux">
-	    <parameter name="browser" value="RemoteFirefox" />
-	    <parameter name="platform" value="Linux" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_1"/>
+	      <class name="example.TestCaseSearches"/>
 	    </classes>
 	  </test> <!-- Test -->
 </suite> <!-- Suite -->
