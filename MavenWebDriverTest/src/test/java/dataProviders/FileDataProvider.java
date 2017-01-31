@@ -17,17 +17,26 @@ import java.util.stream.Stream;
 
 public class FileDataProvider {
 
-	static String fileName = "src/test/resources/data/SearchData.csv";
-	
 	@DataProvider(name="SearchProvider")
     public static Object[][] getDataFromDataprovider(Method m) throws IOException {
-		Object [][] groupArray = null;
+
+		String fileName = "src/test/resources/data/SearchData.csv";
+		
+		FileDataProvider fdp = new FileDataProvider();
+		//return fdp.readFileUsingReader(fileName);
+		return fdp.readFileUsingStream(fileName);
+		
+	}
+	
+	public String[][] readFileUsingReader(String fileName) throws IOException {
+		
+		String [][] groupArray = null;
 		ArrayList<String[]> alist = new ArrayList<String[]>();
 		
 		File f = new File(fileName);
 		System.out.println("File path is: " + f.getAbsolutePath());
 
-/*		// Attempt using older style BufferedReader
+		// Attempt using older style BufferedReader
 		String line = null;
 		Path path = Paths.get(fileName);
 		try (BufferedReader reader = Files.newBufferedReader(path)) {
@@ -43,7 +52,17 @@ public class FileDataProvider {
 
 		groupArray = alist.toArray(new String[alist.size()][]);
 		return groupArray;
-*/
+		
+	} // method
+
+	public String[][] readFileUsingStream(String fileName) throws IOException {
+		
+		String [][] groupArray = null;
+		ArrayList<String[]> alist = new ArrayList<String[]>();
+		
+		File f = new File(fileName);
+		System.out.println("File path is: " + f.getAbsolutePath());
+
 		//  Attempt using file stream
 		try (Stream<String> stream = Files.lines(Paths.get(fileName))) {
 		    stream
@@ -59,5 +78,5 @@ public class FileDataProvider {
 		return groupArray;
 		
 	} // method
-	
+
 }
