@@ -1,10 +1,8 @@
 package example;		
 
-
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 
@@ -17,17 +15,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import org.testng.annotations.Optional;	
-import org.testng.annotations.Test;	
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.AfterTest;
 
-import org.testng.Assert;
 import org.testng.TestException;
 
-public abstract class NewTest {		
+public abstract class NewTest  {		
 
-		protected WebDriver driver;	
+		protected static WebDriver driver;	
 	    private DesiredCapabilities capability;
 
 	    /* Structured this class to be extended with the test added
@@ -212,4 +208,13 @@ public abstract class NewTest {
 	        	break;
 			}
 		}
+
+		/**
+		 * 
+		 * @return
+		 */
+		public static WebDriver getDriver() {
+			return driver;
+		}
+	    
 }	

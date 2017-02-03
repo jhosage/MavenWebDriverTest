@@ -45,7 +45,7 @@ public class GoogleSearchResultsPage {
 		for (WebElement w : resultList) {
 			//results.add(w.getText());
 			results.add(w.getAttribute("href"));
-			System.out.println("result[" +i+ "] is " + results.get(i++));
+			//System.out.println("result[" +i+ "] is " + results.get(i++));
 		}
 
 		return results;
