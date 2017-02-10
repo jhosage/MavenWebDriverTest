@@ -4,7 +4,7 @@ REM
 java ^
 -Dwebdriver.edge.driver=C:/Users/John/Documents/source/edge_driver/MicrosoftWebDriver.exe ^
 -Dwebdriver.gecko.driver=C:/Users/John/Documents/source/gecko_driver/geckodriver.exe ^
--Dwebdriver.ie.driver=C:/Users/John/Documents/source/ie_driver/IEDriverServer.exe ^
+-Dwebdriver.ie.driver=C:/Users/John/Documents/source/ie_driver_32/IEDriverServer.exe ^
 -Dwebdriver.chrome.driver=C:/Users/John/Documents/source/chrome_driver/chromedriver.exe ^
 -jar selenium-server-standalone-3.0.1.jar -role webdriver -host 192.168.1.153 ^
 -hub http://192.168.1.3:4444/grid/register -port 5555 ^

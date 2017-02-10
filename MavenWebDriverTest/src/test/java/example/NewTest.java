@@ -74,12 +74,18 @@ public abstract class NewTest  {
 		        	break;
 		    	case "edge":
 	    			System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver.exe");
-		    		driver = new EdgeDriver();
+	    			DesiredCapabilities cedge = DesiredCapabilities.edge();
+	    			//cedge.setCapability("requireWindowFocus", false);
+	    			driver = new EdgeDriver(cedge);
 		    		System.out.println("Setting driver for local edge.");
 		    	    break;
 		    	case "ie":
 	    			System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer.exe");
-		        	driver = new InternetExplorerDriver();
+	    			DesiredCapabilities cie = DesiredCapabilities.internetExplorer();
+	    			//cie.setCapability("requireWindowFocus", true);
+	    			//cie.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+	    			//cie.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
+	    			driver = new InternetExplorerDriver(cie);
 		    		System.out.println("Setting driver for local IE.");
 		        	break;
 		    	case "remotechrome":

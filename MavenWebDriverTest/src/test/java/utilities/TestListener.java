@@ -36,7 +36,7 @@ public class TestListener implements ITestListener {
         
         String target = "target/surefire-reports/screenshots/screenshot-" + 
         		arg0.getName() + "-" +
-        		new SimpleDateFormat("yyyyMMdd-hhmmss").format(new Date()) +
+        		new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()) +
         		".png";
         Utilities.takeSnapShot(NewTest.getDriver(), target);
     }
