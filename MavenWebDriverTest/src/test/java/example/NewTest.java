@@ -24,6 +24,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+
 import org.testng.annotations.Optional;	
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
@@ -31,9 +33,12 @@ import org.testng.annotations.AfterTest;
 
 import org.testng.TestException;
 
+import utilities.WebDriverEventHandler;
+
 public abstract class NewTest  {		
 
-		protected static WebDriver driver;	
+		private static WebDriver wdriver;
+		protected static EventFiringWebDriver driver = null;
 	    protected DesiredCapabilities capability;
 	    protected LoggingPreferences loggingPreferences = new LoggingPreferences();
 
@@ -66,6 +71,10 @@ public abstract class NewTest  {
 	    	
 	    	setLogging(logging);
 	    	setBrowser(browser, platform, version, gridhub);
+	    	
+	    	// Encase the webdriver for logging.
+	    	driver = new EventFiringWebDriver(wdriver);
+	    	driver.register(new WebDriverEventHandler());
 	    }
 
 		@AfterTest
@@ -89,14 +98,14 @@ public abstract class NewTest  {
 	    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
 	    			capability = DesiredCapabilities.chrome();
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-		    		driver = new ChromeDriver(capability);
+		    		wdriver = new ChromeDriver(capability);
 		    		System.out.println("Setting driver for local chrome.");
 		        	break;
 		    	case "firefox":
 	    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
 	    			capability = DesiredCapabilities.firefox();
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-	    			driver = new FirefoxDriver(capability);
+	    			wdriver = new FirefoxDriver(capability);
 		    		System.out.println("Setting driver for local firefox.");
 		        	break;
 		    	case "edge":
@@ -104,7 +113,7 @@ public abstract class NewTest  {
 	    			capability = DesiredCapabilities.edge();
 	    			//cedge.setCapability("requireWindowFocus", false);
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-	    			driver = new EdgeDriver(capability);
+	    			wdriver = new EdgeDriver(capability);
 		    		System.out.println("Setting driver for local edge.");
 		    	    break;
 		    	case "ie":
@@ -114,7 +123,7 @@ public abstract class NewTest  {
 	    			//cie.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
 	    			capability = DesiredCapabilities.internetExplorer();
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-	    			driver = new InternetExplorerDriver(capability);
+	    			wdriver = new InternetExplorerDriver(capability);
 		    		System.out.println("Setting driver for local IE.");
 		        	break;
 		    	case "remotechrome":
@@ -126,7 +135,7 @@ public abstract class NewTest  {
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		        	break;
 		    	case "remotefirefox":
 		    		System.out.println("Setting driver for: remote firefox, " + 
@@ -137,7 +146,7 @@ public abstract class NewTest  {
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);	
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);	
 		        	break;
 		    	case "remoteedge":
 		    		System.out.println("Setting driver for: remote edge, " + 
@@ -148,7 +157,7 @@ public abstract class NewTest  {
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		    	    break;
 		    	case "remoteie":
 		    		System.out.println("Setting driver for: remote IE, " + 
@@ -159,7 +168,7 @@ public abstract class NewTest  {
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
 	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		        	break;
 		    	default:
 		        	System.err.println("Invalid browser selected: " + browser);
@@ -254,7 +263,7 @@ public abstract class NewTest  {
 		 * @return
 		 */
 		public static WebDriver getDriver() {
-			return driver;
+			return wdriver;
 		}
 	
 		

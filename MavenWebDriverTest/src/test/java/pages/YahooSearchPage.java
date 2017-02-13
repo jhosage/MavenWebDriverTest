@@ -1,17 +1,15 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 public class YahooSearchPage {
 
-	WebDriver driver;
+	EventFiringWebDriver driver;
 
 	By searchText = By.id("yschsp");
 
-	public YahooSearchPage (WebDriver driver) {
+	public YahooSearchPage (EventFiringWebDriver driver) {
 		this.driver = driver;
 	}
 
@@ -26,5 +24,3 @@ public class YahooSearchPage {
 	}
 
 }
-
-
