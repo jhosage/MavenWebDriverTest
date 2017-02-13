@@ -7,7 +7,6 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-
 import example.NewTest;
 
 public class TestListener implements ITestListener {
