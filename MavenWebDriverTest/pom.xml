@@ -35,6 +35,15 @@
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-jxr-plugin</artifactId>
+		        <version>2.5</version>
+      		</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -44,10 +53,46 @@
 					<windowtitle>My API for ${project.name} ${project.version}</windowtitle> <!-- Used by javadoc:javadoc goal -->
 					<testDoctitle>My Test API for ${project.name} ${project.version}</testDoctitle> <!-- Used by javadoc:test-javadoc goal -->
 					<testWindowtitle>My Test API for ${project.name} ${project.version}</testWindowtitle> <!-- Used by javadoc:test-javadoc goal -->
+					<links>
+				       <link>http://seleniumhq.github.io/selenium/docs/api/java</link>
+				    </links>
 				</configuration>
 			</plugin>
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-pmd-plugin</artifactId>
+		        <version>3.7</version>
+		        <configuration>
+          			<linkXref>true</linkXref>
+          			<skipEmptyReport>false</skipEmptyReport>
+          			<includeTests>true</includeTests>
+          		</configuration>
+ 	        </plugin>
+ 	        <plugin>
+	          <groupId>org.apache.maven.plugins</groupId>
+	          <artifactId>maven-checkstyle-plugin</artifactId>
+	          <version>2.17</version>
+	          <configuration>
+	          	<includeTestSourceDirectory>true</includeTestSourceDirectory>
+	          </configuration>
+	          <reportSets>
+	            <reportSet>
+	              <reports>
+	                <report>checkstyle</report>
+	              </reports>
+	            </reportSet>
+	          </reportSets>
+	        </plugin>
+ 	        
+ <!-- 
+ 	        <plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>findbugs-maven-plugin</artifactId>
+		        <version>3.0.5-SNAPSHOT</version>
+	        </plugin>
+-->
 		</plugins>
-	</build>
+	</reporting>
 
 	<dependencies>
 		<dependency>
