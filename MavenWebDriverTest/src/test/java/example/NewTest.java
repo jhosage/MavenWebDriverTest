@@ -1,5 +1,8 @@
 package example;		
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
 import java.util.Date;
 import java.util.logging.Level;
 
@@ -42,6 +45,8 @@ public abstract class NewTest  {
 	    protected DesiredCapabilities capability;
 	    protected LoggingPreferences loggingPreferences = new LoggingPreferences();
 
+		static final Logger log = LogManager.getLogger("DriverLog");
+		
 	    /* Structured this class to be extended with the test added
 	     * to a separate class.
 	     * 
@@ -353,7 +358,7 @@ public abstract class NewTest  {
 				logEntries = logs.get(LogType.SERVER);
 				for (LogEntry logEntry : logEntries) {
 				    //System.out.println("SERVER: " + logEntry.getMessage());
-				    System.out.println("SERVER: " + new Date(logEntry.getTimestamp()).toString() + 
+				    log.debug("SERVER: " + new Date(logEntry.getTimestamp()).toString() + 
 				    						" " + logEntry.getLevel() + 
 				    						" " + logEntry.getMessage());
 				}
