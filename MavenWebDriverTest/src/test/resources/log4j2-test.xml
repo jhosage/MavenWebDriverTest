@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+     	<RollingRandomAccessFile name="eventLog" fileName="./logs/WebDriverEvent.log" 
+     		filePattern="./logs/%d{yyyy-MM-dd-HH-mm}-WebDriverEvent.log"
+     		append="true">
+			<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %class{36} %L %M - %msg%n"/>
+ 	       	<Policies>
+         		<SizeBasedTriggeringPolicy size="1 MB"/>
+      		</Policies>
+      		<DefaultRolloverStrategy max="5"/>
+     	</RollingRandomAccessFile>
+       	<RollingRandomAccessFile name="driverLog" fileName="./logs/WebDriver.log" 
+     		filePattern="./logs/%d{yyyy-MM-dd-HH-mm}-webDriver.log"
+     		append="true">
+	 		<PatternLayout pattern="%msg%n"/>
+ 	       	<Policies>
+         		<SizeBasedTriggeringPolicy size="1 MB"/>
+      		</Policies>
+      		<DefaultRolloverStrategy max="5"/>
+     	</RollingRandomAccessFile>
+     	<File name="rootfile" fileName="./logs/root.log" append="false">
+			<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    	</File>
+        <Console name="Console" target="SYSTEM_OUT">
+        	<PatternLayout pattern="%d{yyyy/MM/dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+    	<Logger name="EventLog" level="all" additivity="false">
+      		<AppenderRef ref="eventLog"/>
+    	</Logger>
+     	<Logger name="DriverLog" level="all" additivity="false">
+      		<AppenderRef ref="driverLog"/>
+    	</Logger>
+        <Root level="all">
+        	<AppenderRef ref="rootfile"/>
+        </Root>
+    </Loggers>
+ </Configuration>

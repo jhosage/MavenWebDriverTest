@@ -1,10 +1,14 @@
 package example;		
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.Date;
+import java.util.logging.Level;
 
 import java.net.URL;
 import java.net.MalformedURLException;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 
@@ -13,23 +17,36 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
+import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.logging.LogType;
+import org.openqa.selenium.logging.Logs;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogEntry;
+
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+
 import org.testng.annotations.Optional;	
-import org.testng.annotations.Test;	
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.AfterTest;
 
-import org.testng.Assert;
 import org.testng.TestException;
 
-public abstract class NewTest {		
+import utilities.WebDriverEventHandler;
 
-		protected WebDriver driver;	
-	    private DesiredCapabilities capability;
+public abstract class NewTest  {		
 
+		private static WebDriver wdriver;
+		protected static EventFiringWebDriver driver = null;
+	    protected DesiredCapabilities capability;
+	    protected LoggingPreferences loggingPreferences = new LoggingPreferences();
+
+		static final Logger log = LogManager.getLogger("DriverLog");
+		
 	    /* Structured this class to be extended with the test added
 	     * to a separate class.
 	     * 
@@ -42,48 +59,76 @@ public abstract class NewTest {
 		*/
 
 	    @BeforeTest 
-	    @Parameters({"browser", "platform", "version", "gridhub"})
+	    @Parameters({"browser", "platform", "version", "gridhub", "logging"})
 		/**
 		 * 
 		 * @param browser	the type of browser to use for the test.  Defaults to "Firefox" if not provided.
 		 * @param platform	the platform on which to run the test.  Defaults to "Windows" if not provided.
-		 * @param version	the version of the browser requested.   Defulats to "" if not provided.
+		 * @param version	the version of the browser requested.   Defaults to "" if not provided.
 		 * @param gridhub	the URL for the grid hub if running remote.  Defaults to "http://localhost:4444/wd/hub" if not provided.
 		 */
 	    public void launchBrowser(@Optional("Firefox") String browser, 
 	    						  @Optional("Windows") String platform,
 	    						  @Optional("") String version,
-			  					  @Optional("http://localhost:4444/wd/hub") String gridhub) {
+			  					  @Optional("http://localhost:4444/wd/hub") String gridhub,
+			  					  @Optional("") String logging) {
 	    
-	    	/*
-	    	 * Key 	Type 	Description
-	    	 * 
-	    	 * browserName 	string 	The name of the browser being used; 
-	    	 * 						should be one of {android|chrome|firefox|htmlunit|internet explorer|iPhone|iPad|opera|safari}.
-	    	 * version 		string 	The browser version, or the empty string if unknown.
-			 * platform 	string 	A key specifying which platform the browser should be running on. 
-			 * 						This value should be one of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX|ANDROID}. When requesting a new session, the client may specify ANY to indicate any available platform may be used. For more information see [GridPlatforms]
-	    	 */
+	    	
+	    	setLogging(logging);
+	    	setBrowser(browser, platform, version, gridhub);
+	    	
+	    	// Encase the webdriver for logging.
+	    	driver = new EventFiringWebDriver(wdriver);
+	    	driver.register(new WebDriverEventHandler());
+	    }
+
+		@AfterTest
+		public void afterTest() {
+			printLogs();
+			driver.quit();			
+		}		
+
+	    
+	    /**
+	     * 
+	     * @param browser
+	     * @param platform
+	     * @param version
+	     * @param gridhub
+	     */
+	    private void setBrowser(String browser, String platform, String version, String gridhub) {
 	    	try {
 		    	switch (browser.toLowerCase()) {
 		    	case "chrome":
 	    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
-		    		driver = new ChromeDriver();
+	    			capability = DesiredCapabilities.chrome();
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+		    		wdriver = new ChromeDriver(capability);
 		    		System.out.println("Setting driver for local chrome.");
 		        	break;
 		    	case "firefox":
 	    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
-		      	    driver = new FirefoxDriver();
+	    			capability = DesiredCapabilities.firefox();
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+	    			wdriver = new FirefoxDriver(capability);
 		    		System.out.println("Setting driver for local firefox.");
 		        	break;
 		    	case "edge":
 	    			System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver.exe");
-		    		driver = new EdgeDriver();
+	    			capability = DesiredCapabilities.edge();
+	    			//cedge.setCapability("requireWindowFocus", false);
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+	    			wdriver = new EdgeDriver(capability);
 		    		System.out.println("Setting driver for local edge.");
 		    	    break;
 		    	case "ie":
 	    			System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer.exe");
-		        	driver = new InternetExplorerDriver();
+	    			//cie.setCapability("requireWindowFocus", true);
+	    			//cie.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
+	    			//cie.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
+	    			capability = DesiredCapabilities.internetExplorer();
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+	    			wdriver = new InternetExplorerDriver(capability);
 		    		System.out.println("Setting driver for local IE.");
 		        	break;
 		    	case "remotechrome":
@@ -94,7 +139,8 @@ public abstract class NewTest {
 		        	//capability.setBrowserName("chrome");
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		        	break;
 		    	case "remotefirefox":
 		    		System.out.println("Setting driver for: remote firefox, " + 
@@ -104,7 +150,8 @@ public abstract class NewTest {
 		        	//capability.setBrowserName("firefox");
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);	
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);	
 		        	break;
 		    	case "remoteedge":
 		    		System.out.println("Setting driver for: remote edge, " + 
@@ -114,7 +161,8 @@ public abstract class NewTest {
 		        	//capability.setBrowserName("edge");
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		    	    break;
 		    	case "remoteie":
 		    		System.out.println("Setting driver for: remote IE, " + 
@@ -124,7 +172,8 @@ public abstract class NewTest {
 		        	//capability.setBrowserName("internet explorer");
 		        	capability.setVersion(version);
 		        	setCapabilityPlatform(capability, platform);
-		    		driver = new RemoteWebDriver(new URL(gridhub), capability);
+	    			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+		    		wdriver = new RemoteWebDriver(new URL(gridhub), capability);
 		        	break;
 		    	default:
 		        	System.err.println("Invalid browser selected: " + browser);
@@ -144,10 +193,7 @@ public abstract class NewTest {
 	    	
 	    } // end of launchBrowser
 		
-		@AfterTest
-		public void afterTest() {
-			driver.quit();			
-		}		
+
 
 		/**
 		 * Sets the platform desired capability in relation to Selenium Grid.
@@ -160,6 +206,11 @@ public abstract class NewTest {
 		 * @see			org.openqa.selenium.Platform
 		 */
 		private void setCapabilityPlatform (DesiredCapabilities c, String platform) {
+
+			// Set Logging capabilities
+			c.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+			
+			// Set the preferred platform for remote testing.
 			switch (platform.toLowerCase()) {
 			case "android": 
 				c.setPlatform(Platform.ANDROID);
@@ -207,9 +258,112 @@ public abstract class NewTest {
 				c.setPlatform(Platform.YOSEMITE);
 				break;
 	    	default:
-	        	System.err.println("Invalid platform for remote grid capabilities specified: " 
-	        			+ platform);
+	        	System.out.println("Before Test Driver setup: no platform specified for driver capabilities."); 
 	        	break;
 			}
 		}
+
+		/**
+		 * 
+		 * @return
+		 */
+		public static WebDriver getDriver() {
+			return wdriver;
+		}
+	
+		
+		/**
+		 * Sets the logging levels for the web driver.
+		 * 
+		 * 
+		 */
+		private void setLogging(String level) {
+			
+			switch (level.toLowerCase()) {
+			case "": 
+				break;
+			case "browser":
+				loggingPreferences.enable(LogType.BROWSER, Level.ALL);
+				break;
+			case "client":
+				loggingPreferences.enable(LogType.CLIENT, Level.ALL);
+				break;
+			case "driver":
+				loggingPreferences.enable(LogType.DRIVER, Level.ALL);
+				break;
+			case "performance":
+				loggingPreferences.enable(LogType.PERFORMANCE, Level.ALL);
+				break;
+			case "profiler":
+				loggingPreferences.enable(LogType.PROFILER, Level.ALL);
+				break;
+			case "server":
+				loggingPreferences.enable(LogType.SERVER, Level.ALL);
+				break;
+			default:
+				System.err.println("Setting logging level: unknown logging level -> " + level);
+			}
+		
+		}
+		
+		/**
+		 * 
+		 */
+		private void printLogs() {
+			Logs logs = driver.manage().logs();
+			LogEntries logEntries;
+
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.BROWSER)) {
+				System.out.println("Printing BROWSER logs.");
+				logEntries = logs.get(LogType.BROWSER);
+				for (LogEntry logEntry : logEntries) {
+				    System.out.println("BROWSER: " + logEntry.getMessage());
+				}
+			}
+
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.CLIENT)) {
+				System.out.println("Printing CLIENT logs.");
+				logEntries = logs.get(LogType.CLIENT);
+				for (LogEntry logEntry : logEntries) {
+				    System.out.println("CLIENT: " + logEntry.getMessage());
+				}
+			}
+			
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.DRIVER)) {
+				System.out.println("Printing DRIVER logs.");
+				logEntries = logs.get(LogType.DRIVER);
+				for (LogEntry logEntry : logEntries) {
+				    System.out.println("DRIVER: " + logEntry.getMessage());
+				}
+			}
+			
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.PERFORMANCE)) {
+				System.out.println("Printing PERFORMANCE logs.");
+				logEntries = logs.get(LogType.PERFORMANCE);
+				for (LogEntry logEntry : logEntries) {
+				    System.out.println("PERFORMANCE: " + logEntry.getMessage());
+				}
+			}
+			
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.PROFILER)) {
+				System.out.println("Printing PROFILER logs.");
+				logEntries = logs.get(LogType.PROFILER);
+				for (LogEntry logEntry : logEntries) {
+				    System.out.println("PROFILER: " + logEntry.getMessage());
+				}
+			}
+			
+			if (loggingPreferences.getEnabledLogTypes().contains(LogType.SERVER)) {
+				System.out.println("Printing SERVER logs.");
+				logEntries = logs.get(LogType.SERVER);
+				for (LogEntry logEntry : logEntries) {
+				    //System.out.println("SERVER: " + logEntry.getMessage());
+				    log.debug("SERVER: " + new Date(logEntry.getTimestamp()).toString() + 
+				    						" " + logEntry.getLevel() + 
+				    						" " + logEntry.getMessage());
+				}
+			}
+			
+		}
+		
 }	
