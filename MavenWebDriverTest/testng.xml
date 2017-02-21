@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="2" parallel="tests">
-   	  <test name="TestCase_SearchesListDataProvider">
-	    <parameter name="browser" value="RemoteChrome" />
-	    <parameter name="platform" value="Windows" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_SearchesListDataProvider"/>
-	    </classes>
-	  </test> <!-- Test -->
-	  <test name="TestCase_SearchesFileDataProvider">
-	    <parameter name="browser" value="RemoteFirefox" />
+
+	  <parameter name="logging" value="server" />
+
+	  <listeners>
+	    <listener class-name="utilities.TestListener" />
+	  </listeners>
+	  
+       <test name="TestCase_SearchesFileDataProvider3">
+	    <parameter name="browser" value="RemoteIE" />
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
 	      <class name="example.TestCase_SearchesFileDataProvider"/>
 	    </classes>
 	  </test> <!-- Test -->
-   	  <test name="TestCase_SearchesExcelDataProvider">
+      <test name="TestCase_SearchesFileDataProvider1">
+	    <parameter name="browser" value="RemoteChrome" />
+	    <parameter name="platform" value="Linux" />
+	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
+	    <classes>
+	      <class name="example.TestCase_SearchesFileDataProvider"/>
+	    </classes>
+	  </test> <!-- Test -->
+      <test name="TestCase_SearchesFileDataProvider2">
+	    <parameter name="browser" value="RemoteFirefox" />
+	    <parameter name="platform" value="Linux" />
+	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
+	    <classes>
+	      <class name="example.TestCase_SearchesFileDataProvider"/>
+	    </classes>
+	  </test> <!-- Test -->	  	  
+     <test name="TestCase_SearchesFileDataProvider4">
 	    <parameter name="browser" value="RemoteEdge" />
 	    <parameter name="platform" value="Windows" />
 	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
 	    <classes>
-	      <class name="example.TestCase_SearchesExcelDataProvider"/>
+	      <class name="example.TestCase_SearchesFileDataProvider"/>
 	    </classes>
-	  </test> <!-- Test -->
-   	  <test name="TestCase_SearchesMysqlDataProvider">
-	    <parameter name="browser" value="RemoteIE" />
-	    <parameter name="platform" value="Windows" />
-	    <parameter name="gridhub" value="http://192.168.1.3:4444/wd/hub" />
-	    <classes>
-	      <class name="example.TestCase_SearchesMysqlDataProvider"/>
-	    </classes>
-	  </test> <!-- Test -->
-</suite> <!-- Suite -->
+	  </test> <!-- Test -->	  	  
+ </suite> <!-- Suite -->

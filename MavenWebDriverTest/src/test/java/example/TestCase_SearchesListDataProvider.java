@@ -13,7 +13,7 @@ import pages.YahooSearchResultsPage;
 public class TestCase_SearchesListDataProvider extends NewTest {
 
 	//@Test (enabled=false) 
-	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataProviders.ListDataProvider.class)
+	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataproviders.ListDataProvider.class)
 	public void testDuckDuckGo(String searchText, String resultText) {	
 		driver.get("https://duckduckgo.com");  
 		
@@ -25,7 +25,7 @@ public class TestCase_SearchesListDataProvider extends NewTest {
 		Assert.assertTrue(resultsPage.searchResultsContains(resultText)); 		
 	}	
 
-	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataProviders.ListDataProvider.class)			
+	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataproviders.ListDataProvider.class)			
 	public void testGoogle(String searchText, String resultText) {	
 		driver.get("https://www.google.com");  
 		
@@ -38,7 +38,7 @@ public class TestCase_SearchesListDataProvider extends NewTest {
 		Assert.assertTrue(resultsPage.searchResultsContains(resultText)); 		
 	}	
 
-	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataProviders.ListDataProvider.class)		
+	@Test (enabled=true, dataProvider="SearchProvider", dataProviderClass=dataproviders.ListDataProvider.class)		
 	public void testYahoo(String searchText, String resultText) {	
 		driver.get("https://search.yahoo.com");  
 		
