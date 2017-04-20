@@ -15,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import org.openqa.selenium.logging.LoggingPreferences;
@@ -128,21 +129,28 @@ public abstract class NewTest  {
     	try {
 	    	switch (browser.toLowerCase()) {
 	    	case "chrome":
-    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver.exe");
+    			System.setProperty("webdriver.chrome.driver", "C:\\Users\\John\\Documents\\source\\chrome_driver\\chromedriver_2.29.exe");
     			capability = DesiredCapabilities.chrome();
     			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
 	    		wdriver = new ChromeDriver(capability);
 	    		System.out.println("Setting driver for local chrome.");
 	        	break;
 	    	case "firefox":
-    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver.exe");
+    			System.setProperty("webdriver.gecko.driver","C:\\Users\\John\\Documents\\source\\gecko_driver\\geckodriver_0.15_64.exe");
+
     			capability = DesiredCapabilities.firefox();
     			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
+
+                FirefoxProfile profile = new FirefoxProfile();
+                profile.setPreference("dom.webnotifications.enabled", false);
+//    			capability.setCapability(FirefoxDriver.PROFILE, profile);
+//              wdriver = new FirefoxDriver(profile);
+              
     			wdriver = new FirefoxDriver(capability);
 	    		System.out.println("Setting driver for local firefox.");
 	        	break;
 	    	case "edge":
-    			System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver.exe");
+    			System.setProperty("webdriver.edge.driver", "C:\\Users\\John\\Documents\\source\\edge_driver\\MicrosoftWebDriver_15063.exe");
     			capability = DesiredCapabilities.edge();
     			//cedge.setCapability("requireWindowFocus", false);
     			capability.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
@@ -150,7 +158,7 @@ public abstract class NewTest  {
 	    		System.out.println("Setting driver for local edge.");
 	    	    break;
 	    	case "ie":
-    			System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer.exe");
+    			System.setProperty("webdriver.ie.driver", "C:\\Users\\John\\Documents\\source\\ie_driver_32\\IEDriverServer_3.3.0.exe");
     			//cie.setCapability("requireWindowFocus", true);
     			//cie.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
     			//cie.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);

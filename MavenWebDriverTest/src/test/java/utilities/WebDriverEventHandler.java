@@ -11,7 +11,18 @@ import org.openqa.selenium.support.events.WebDriverEventListener;
 public class WebDriverEventHandler implements WebDriverEventListener{
 
 	static final Logger log = LogManager.getLogger("EventLog");
-	
+
+
+    public void afterAlertAccept(WebDriver arg1) {
+        log.traceEntry();
+        log.traceExit();
+    }
+
+    public void afterAlertDismiss(WebDriver arg1) {
+        log.traceEntry();
+        log.traceExit();
+    }
+
 	public void afterChangeValueOf(WebElement arg0, WebDriver arg1, CharSequence[] arg2) {
 		log.traceEntry();
 		log.traceExit();
@@ -63,6 +74,16 @@ public class WebDriverEventHandler implements WebDriverEventListener{
 		//System.out.println("Inside the afterScript to, Script is " + arg0);
 	}
  
+    public void beforeAlertAccept(WebDriver arg1) {
+        log.traceEntry();
+        log.traceExit();
+    }
+
+    public void beforeAlertDismiss(WebDriver arg1) {
+        log.traceEntry();
+        log.traceExit();
+    }
+
 	public void beforeChangeValueOf(WebElement arg0, WebDriver arg1, CharSequence[] arg2) {
 		log.traceEntry();
 		log.traceExit();
